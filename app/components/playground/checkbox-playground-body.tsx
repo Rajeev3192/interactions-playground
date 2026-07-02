@@ -138,7 +138,7 @@ export function CheckboxPlaygroundBody({ variant }: CheckboxPlaygroundBodyProps)
           {titleBlock}
           {demoSection}
         </div>
-        <KnobsColumn>{knobsPanel}</KnobsColumn>
+        <KnobsColumn compact>{knobsPanel}</KnobsColumn>
       </div>
     );
   }

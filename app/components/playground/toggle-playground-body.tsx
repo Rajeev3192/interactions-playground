@@ -116,7 +116,7 @@ export function TogglePlaygroundBody({ variant }: TogglePlaygroundBodyProps) {
           {titleBlock}
           {demoSection}
         </div>
-        <KnobsColumn>{knobsPanel}</KnobsColumn>
+        <KnobsColumn compact>{knobsPanel}</KnobsColumn>
       </div>
     );
   }

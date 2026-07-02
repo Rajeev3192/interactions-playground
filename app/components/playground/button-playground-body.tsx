@@ -182,7 +182,7 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
           {titleBlock}
           {demoSection}
         </div>
-        <KnobsColumn>{knobsPanel}</KnobsColumn>
+        <KnobsColumn compact>{knobsPanel}</KnobsColumn>
       </div>
     );
   }

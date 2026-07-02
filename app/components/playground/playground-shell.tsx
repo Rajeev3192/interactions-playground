@@ -75,7 +75,14 @@ export function DemoSection({ children }: { children: React.ReactNode }) {
 
 // Fixed width (not content-shrunk) so the knobs panel + spring preview are
 // the same width on every playground page regardless of how wide their
-// own contents happen to be.
-export function KnobsColumn({ children }: { children: React.ReactNode }) {
-  return <div className="flex w-full flex-col gap-4 md:order-2 md:w-80 md:shrink-0">{children}</div>;
+// own contents happen to be. `compact` uses a narrower fixed width — for
+// embeds, which run at portfolio-iframe widths rather than a full desktop
+// browser, the full-page 320px column otherwise squeezes the demo column
+// into wrapping.
+export function KnobsColumn({ children, compact = false }: { children: React.ReactNode; compact?: boolean }) {
+  return (
+    <div className={cn("flex w-full flex-col gap-4 md:order-2 md:shrink-0", compact ? "md:w-64" : "md:w-80")}>
+      {children}
+    </div>
+  );
 }

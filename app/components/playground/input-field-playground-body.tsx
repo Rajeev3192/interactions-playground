@@ -152,7 +152,7 @@ export function InputFieldPlaygroundBody({ variant }: InputFieldPlaygroundBodyPr
           {titleBlock}
           {demoSection}
         </div>
-        <KnobsColumn>{knobsPanel}</KnobsColumn>
+        <KnobsColumn compact>{knobsPanel}</KnobsColumn>
       </div>
     );
   }

@@ -257,7 +257,7 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
           {titleBlock}
           {demoSection}
         </div>
-        <KnobsColumn>{knobsPanel}</KnobsColumn>
+        <KnobsColumn compact>{knobsPanel}</KnobsColumn>
       </div>
     );
   }
