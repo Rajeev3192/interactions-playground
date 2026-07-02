@@ -3,10 +3,10 @@
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { CheckboxPlaygroundBody } from "@/components/playground/checkbox-playground-body";
 
-export default function CheckboxPlaygroundPage() {
+export default function CheckboxEmbedPage() {
   return (
-    <PlaygroundShell current="checkbox">
-      <CheckboxPlaygroundBody variant="full" />
+    <PlaygroundShell current="checkbox" variant="embed">
+      <CheckboxPlaygroundBody variant="embed" />
     </PlaygroundShell>
   );
 }
