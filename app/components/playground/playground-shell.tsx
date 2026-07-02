@@ -42,7 +42,7 @@ export function PlaygroundShell({
         {(isEmbed ? builtItems : navItems).map((item) => (
           <Link
             key={item.slug}
-            href={item.built ? `/playground/${item.slug}` : "#"}
+            href={item.built ? `/${isEmbed ? "embed" : "playground"}/${item.slug}` : "#"}
             aria-disabled={!item.built}
             className={cn(
               "focus-ring rounded-[var(--radius-sm)] px-2 py-1.5 text-sm transition-colors",
