@@ -5,7 +5,7 @@ import { TooltipPlaygroundBody } from "@/components/playground/tooltip-playgroun
 
 export default function TooltipEmbedPage() {
   return (
-    <PlaygroundShell current="tooltip">
+    <PlaygroundShell current="tooltip" variant="embed">
       <TooltipPlaygroundBody variant="embed" />
     </PlaygroundShell>
   );

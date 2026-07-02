@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { Tooltip, TooltipGroup, type TooltipSide } from "@/components/ui/tooltip";
 import { KnobsPanel, type Knob } from "@/components/playground/knobs-panel";
 import { DemoSection, KnobsColumn } from "@/components/playground/playground-shell";
@@ -186,116 +185,119 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
     },
   ];
 
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl font-semibold text-foreground">Tooltip</h1>
-        <p className="mt-1 text-sm text-foreground-secondary">
-          Delayed entrance timing and collision-aware placement — the first component where
-          *not* animating immediately is the actual lesson.
-        </p>
-      </div>
+  const titleBlock = (
+    <div>
+      <h1 className="text-2xl font-semibold text-foreground">Tooltip</h1>
+      <p className="mt-1 text-sm text-foreground-secondary">
+        Delayed entrance timing and collision-aware placement — the first component where
+        *not* animating immediately is the actual lesson.
+      </p>
+    </div>
+  );
 
-      <DemoSection>
-        {/* Each demo gets its own group — sharing one across unrelated demos
-            means touching one leaves the others' "instant phase" grace
-            window active too, which makes the delay knob look broken when
-            you test them one after another. */}
-        <div className="flex flex-col items-center gap-10">
-          <TooltipGroup delayMs={delayMs} groupTimeoutMs={groupTimeoutMs}>
-            <div className="flex flex-col items-center gap-2">
-              <div className="flex gap-1.5 rounded-[var(--radius-md)] border border-border bg-surface p-1.5">
-                {toolbarDemoItems.map((item) => (
-                  <Tooltip key={item.label} content={item.tooltip} durationMs={durationMs}>
-                    <ToolbarButton>{item.label}</ToolbarButton>
-                  </Tooltip>
-                ))}
+  const demoSection = (
+    <DemoSection>
+      {/* Each demo gets its own group — sharing one across unrelated demos
+          means touching one leaves the others' "instant phase" grace
+          window active too, which makes the delay knob look broken when
+          you test them one after another. */}
+      <div className="flex flex-col items-center gap-10">
+        <TooltipGroup delayMs={delayMs} groupTimeoutMs={groupTimeoutMs}>
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex gap-1.5 rounded-[var(--radius-md)] border border-border bg-surface p-1.5">
+              {toolbarDemoItems.map((item) => (
+                <Tooltip key={item.label} content={item.tooltip} durationMs={durationMs}>
+                  <ToolbarButton>{item.label}</ToolbarButton>
+                </Tooltip>
+              ))}
+            </div>
+            <span className="text-xs text-foreground-muted">
+              Hover across these quickly — only the first waits for the delay
+            </span>
+          </div>
+        </TooltipGroup>
+
+        <div className="flex flex-wrap items-start justify-center gap-10">
+          <div className="flex flex-col items-center gap-2">
+            <TooltipGroup delayMs={delayMs} groupTimeoutMs={groupTimeoutMs}>
+              <div className="flex h-14 items-center justify-center">
+                <Tooltip content="Plenty of room here" side={side} durationMs={durationMs}>
+                  <button className="focus-ring rounded-[var(--radius-sm)] border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover">
+                    Hover me
+                  </button>
+                </Tooltip>
               </div>
-              <span className="text-xs text-foreground-muted">
-                Hover across these quickly — only the first waits for the delay
-              </span>
-            </div>
-          </TooltipGroup>
+            </TooltipGroup>
+            <span className="max-w-[10rem] text-center text-xs text-foreground-muted">
+              Normal case — shows on your preferred side, no obstruction
+            </span>
+          </div>
 
-          <div className="flex flex-wrap items-start justify-center gap-10">
-            <div className="flex flex-col items-center gap-2">
-              <TooltipGroup delayMs={delayMs} groupTimeoutMs={groupTimeoutMs}>
-                <div className="flex h-14 items-center justify-center">
-                  <Tooltip content="Plenty of room here" side={side} durationMs={durationMs}>
-                    <button className="focus-ring rounded-[var(--radius-sm)] border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover">
-                      Hover me
-                    </button>
-                  </Tooltip>
-                </div>
-              </TooltipGroup>
-              <span className="max-w-[10rem] text-center text-xs text-foreground-muted">
-                Normal case — shows on your preferred side, no obstruction
-              </span>
-            </div>
-
-            <div className="flex flex-col items-center gap-2">
-              <TooltipGroup delayMs={delayMs} groupTimeoutMs={groupTimeoutMs}>
-                <CollisionDemo side={side} durationMs={durationMs} />
-              </TooltipGroup>
-              <span className="max-w-[10rem] text-center text-xs text-foreground-muted">
-                Boxed in on purpose — watch it flip to whichever side actually fits
-              </span>
-            </div>
+          <div className="flex flex-col items-center gap-2">
+            <TooltipGroup delayMs={delayMs} groupTimeoutMs={groupTimeoutMs}>
+              <CollisionDemo side={side} durationMs={durationMs} />
+            </TooltipGroup>
+            <span className="max-w-[10rem] text-center text-xs text-foreground-muted">
+              Boxed in on purpose — watch it flip to whichever side actually fits
+            </span>
           </div>
         </div>
-      </DemoSection>
+      </div>
+    </DemoSection>
+  );
+
+  const knobsPanel = (
+    <KnobsPanel title="Tooltip knobs" knobs={knobs} onReset={reset} getCodeSnippet={getCodeSnippet} />
+  );
+
+  if (variant === "embed") {
+    return (
+      <div className="flex flex-col gap-8 md:flex-row">
+        <div className="flex min-w-0 flex-1 flex-col gap-8">
+          {titleBlock}
+          {demoSection}
+        </div>
+        <KnobsColumn>{knobsPanel}</KnobsColumn>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {titleBlock}
+      {demoSection}
 
       <div className="flex flex-col gap-8 md:flex-row">
-        <KnobsColumn>
-          <KnobsPanel
-            title="Tooltip knobs"
-            knobs={knobs}
-            onReset={reset}
-            getCodeSnippet={getCodeSnippet}
+        <KnobsColumn>{knobsPanel}</KnobsColumn>
+        <div className="flex-1 md:order-1">
+          <ConceptGuide
+            title="How this works"
+            intro="Every other component in this library reacts the instant you interact with it. A tooltip is the opposite: showing up instantly on every passing hover would be exhausting, so the interesting design decision here is entirely about when to wait and when not to."
+            entries={[
+              {
+                term: "Hover-intent delay",
+                body: "How long your mouse has to sit on the trigger before the tooltip appears. At 0ms, every mouse pass over the toolbar lights up a tooltip — noisy and distracting. At 1000ms, even a deliberate hover feels like it's ignoring you. The default, 400ms, is long enough to filter out 'just passing through' and short enough to still feel responsive to real intent.",
+              },
+              {
+                term: "Group grace window",
+                body: "Hover the toolbar buttons above one at a time, slowly — each one waits out the full delay. Now hover across them quickly — only the first one waits. This window is how long that 'you've already shown intent' grace period lasts after a tooltip closes. At 0ms, every tooltip in the row goes back to the full delay, even when scanning across them takes half a second. At 1000ms, the grace period outlives most people's actual scan time.",
+              },
+              {
+                term: "Show/hide duration",
+                body: "How long the fade + slight rise takes once the tooltip decides to show (and the reverse on hide, at about 70% of this length — exits are always faster than entrances in this library). This is a genuine motion duration, unlike the delay above, which is pure timing with no animation of its own.",
+              },
+              {
+                term: "Preferred position",
+                body: "The side you'd like the tooltip to appear on — but it's a preference, not a guarantee. The left demo has room in every direction, so it just shows wherever you asked. The right demo is boxed in on purpose: no matter which side you pick, the tooltip automatically flips to whichever one actually fits, rather than rendering off-screen or getting clipped. That collision check runs on a real positioning engine (Floating UI), not hand-rolled math, which is exactly the kind of solved problem not worth reinventing.",
+              },
+              {
+                term: "Why keyboard focus matters here",
+                body: "This tooltip shows on keyboard focus, not just mouse hover — a keyboard-only user tabbing through the toolbar needs the same information a mouse user gets from hovering. Skipping this is one of the most common tooltip accessibility failures.",
+              },
+            ]}
           />
-        </KnobsColumn>
-        {variant === "full" && (
-          <div className="flex-1 md:order-1">
-            <ConceptGuide
-              title="How this works"
-              intro="Every other component in this library reacts the instant you interact with it. A tooltip is the opposite: showing up instantly on every passing hover would be exhausting, so the interesting design decision here is entirely about when to wait and when not to."
-              entries={[
-                {
-                  term: "Hover-intent delay",
-                  body: "How long your mouse has to sit on the trigger before the tooltip appears. At 0ms, every mouse pass over the toolbar lights up a tooltip — noisy and distracting. At 1000ms, even a deliberate hover feels like it's ignoring you. The default, 400ms, is long enough to filter out 'just passing through' and short enough to still feel responsive to real intent.",
-                },
-                {
-                  term: "Group grace window",
-                  body: "Hover the toolbar buttons above one at a time, slowly — each one waits out the full delay. Now hover across them quickly — only the first one waits. This window is how long that 'you've already shown intent' grace period lasts after a tooltip closes. At 0ms, every tooltip in the row goes back to the full delay, even when scanning across them takes half a second. At 1000ms, the grace period outlives most people's actual scan time.",
-                },
-                {
-                  term: "Show/hide duration",
-                  body: "How long the fade + slight rise takes once the tooltip decides to show (and the reverse on hide, at about 70% of this length — exits are always faster than entrances in this library). This is a genuine motion duration, unlike the delay above, which is pure timing with no animation of its own.",
-                },
-                {
-                  term: "Preferred position",
-                  body: "The side you'd like the tooltip to appear on — but it's a preference, not a guarantee. The left demo has room in every direction, so it just shows wherever you asked. The right demo is boxed in on purpose: no matter which side you pick, the tooltip automatically flips to whichever one actually fits, rather than rendering off-screen or getting clipped. That collision check runs on a real positioning engine (Floating UI), not hand-rolled math, which is exactly the kind of solved problem not worth reinventing.",
-                },
-                {
-                  term: "Why keyboard focus matters here",
-                  body: "This tooltip shows on keyboard focus, not just mouse hover — a keyboard-only user tabbing through the toolbar needs the same information a mouse user gets from hovering. Skipping this is one of the most common tooltip accessibility failures.",
-                },
-              ]}
-            />
-          </div>
-        )}
+        </div>
       </div>
-
-      {variant === "embed" && (
-        <Link
-          href="/playground/tooltip"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="focus-ring self-start rounded-[var(--radius-sm)] text-sm font-medium text-accent hover:underline"
-        >
-          View the full component page ↗
-        </Link>
-      )}
     </>
   );
 }

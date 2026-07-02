@@ -5,28 +5,41 @@ import { navItems } from "./nav-items";
 export function PlaygroundShell({
   current,
   children,
+  variant = "app",
 }: {
   current: string | "home";
   children: React.ReactNode;
+  /** "embed" drops the header/Home link and only lists built components,
+   *  followed by a "more coming soon" note — meant for portfolio iframes,
+   *  not the main app nav. */
+  variant?: "app" | "embed";
 }) {
+  const isEmbed = variant === "embed";
+  const builtItems = navItems.filter((item) => item.built);
+  const hasUnbuiltItems = builtItems.length < navItems.length;
+
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-6xl gap-8 px-8 py-10">
       <aside className="sticky top-10 hidden h-fit w-48 shrink-0 flex-col gap-1 md:flex">
-        <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-          Playground: Micro-interactions
-        </div>
-        <Link
-          href="/"
-          className={cn(
-            "focus-ring mb-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-sm transition-colors",
-            current === "home"
-              ? "bg-surface-active font-medium text-foreground"
-              : "text-foreground-secondary hover:bg-surface-hover hover:text-foreground"
-          )}
-        >
-          Home
-        </Link>
-        {navItems.map((item) => (
+        {!isEmbed && (
+          <>
+            <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
+              Playground: Micro-interactions
+            </div>
+            <Link
+              href="/"
+              className={cn(
+                "focus-ring mb-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-sm transition-colors",
+                current === "home"
+                  ? "bg-surface-active font-medium text-foreground"
+                  : "text-foreground-secondary hover:bg-surface-hover hover:text-foreground"
+              )}
+            >
+              Home
+            </Link>
+          </>
+        )}
+        {(isEmbed ? builtItems : navItems).map((item) => (
           <Link
             key={item.slug}
             href={item.built ? `/playground/${item.slug}` : "#"}
@@ -43,6 +56,9 @@ export function PlaygroundShell({
             {item.name}
           </Link>
         ))}
+        {isEmbed && hasUnbuiltItems && (
+          <div className="px-2 py-1.5 text-sm italic text-foreground-muted">More components coming soon</div>
+        )}
       </aside>
       <main className="flex min-w-0 flex-1 flex-col gap-8">{children}</main>
     </div>
