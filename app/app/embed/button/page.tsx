@@ -3,10 +3,10 @@
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { ButtonPlaygroundBody } from "@/components/playground/button-playground-body";
 
-export default function ButtonPlaygroundPage() {
+export default function ButtonEmbedPage() {
   return (
-    <PlaygroundShell current="button">
-      <ButtonPlaygroundBody variant="full" />
+    <PlaygroundShell current="button" variant="embed">
+      <ButtonPlaygroundBody variant="embed" />
     </PlaygroundShell>
   );
 }
