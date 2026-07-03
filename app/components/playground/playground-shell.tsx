@@ -20,7 +20,12 @@ export function PlaygroundShell({
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-6xl gap-8 px-8 py-10">
-      <aside className="sticky top-10 hidden h-fit w-48 shrink-0 flex-col gap-1 md:flex">
+      <aside
+        className={cn(
+          "sticky top-10 hidden h-fit shrink-0 flex-col gap-1 md:flex",
+          isEmbed ? "w-36" : "w-48"
+        )}
+      >
         {!isEmbed && (
           <>
             <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
