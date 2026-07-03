@@ -120,10 +120,14 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
     },
   ];
 
+  const description = (
+    <p className="mt-1 text-sm text-foreground-secondary">Press physics and async state handling.</p>
+  );
+
   const titleBlock = (
     <div>
       <h1 className="text-2xl font-semibold text-foreground">Button</h1>
-      <p className="mt-1 text-sm text-foreground-secondary">Press physics and async state handling.</p>
+      {description}
     </div>
   );
 
@@ -179,7 +183,7 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {titleBlock}
+          {description}
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>

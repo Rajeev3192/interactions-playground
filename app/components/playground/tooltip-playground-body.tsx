@@ -185,13 +185,17 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
     },
   ];
 
+  const description = (
+    <p className="mt-1 text-sm text-foreground-secondary">
+      Delayed entrance timing and collision-aware placement — the first component where
+      *not* animating immediately is the actual lesson.
+    </p>
+  );
+
   const titleBlock = (
     <div>
       <h1 className="text-2xl font-semibold text-foreground">Tooltip</h1>
-      <p className="mt-1 text-sm text-foreground-secondary">
-        Delayed entrance timing and collision-aware placement — the first component where
-        *not* animating immediately is the actual lesson.
-      </p>
+      {description}
     </div>
   );
 
@@ -254,7 +258,7 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {titleBlock}
+          {description}
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>
