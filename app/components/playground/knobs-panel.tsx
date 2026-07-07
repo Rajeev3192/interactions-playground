@@ -245,7 +245,7 @@ export function KnobsPanel({ title = "Knobs", knobs, onReset, getCodeSnippet, cl
           onClick={handleCopy}
           className="focus-ring flex-1 rounded-[var(--radius-sm)] bg-accent px-3 py-2 text-xs font-medium text-accent-foreground transition-colors hover:bg-accent-hover"
         >
-          {copied ? "Copied!" : "Custom changes"}
+          {copied ? "Copied!" : "Copy Custom Code"}
         </button>
       </div>
     </div>

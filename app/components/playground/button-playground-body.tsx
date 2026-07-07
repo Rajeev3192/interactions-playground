@@ -140,7 +140,7 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
         <h1 className="text-2xl font-semibold text-foreground">Button</h1>
         {description}
       </div>
-      <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+      <CopyCodeButton label="Copy Code" getCode={getDefaultCodeSnippet} />
     </div>
   );
 
@@ -198,7 +198,7 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
         <div className="flex min-w-0 flex-1 flex-col gap-8">
           <div className="flex items-start justify-between gap-4">
             {description}
-            <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+            <CopyCodeButton label="Copy Code" getCode={getDefaultCodeSnippet} />
           </div>
           {demoSection}
         </div>
