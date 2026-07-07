@@ -5,7 +5,10 @@ import { Tooltip, TooltipGroup, type TooltipSide } from "@/components/ui/tooltip
 import { KnobsPanel, type Knob } from "@/components/playground/knobs-panel";
 import { DemoSection, KnobsColumn } from "@/components/playground/playground-shell";
 import { ConceptGuide } from "@/components/playground/concept-guide";
+import { CopyCodeButton } from "@/components/playground/copy-code-button";
 import { cn } from "@/lib/cn";
+
+const TOOLTIP_IMPORT = 'import { Tooltip, TooltipGroup } from "@/components/ui/tooltip";\n\n';
 
 const DEFAULTS = {
   delayMs: 400,
@@ -134,7 +137,10 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
   };
 
   const getCodeSnippet = () =>
-    `<TooltipGroup delayMs={${delayMs}} groupTimeoutMs={${groupTimeoutMs}}>\n  <Tooltip content="Bold (${formatShortcut(modKey, "B")})" durationMs={${durationMs}}>\n    <button>B</button>\n  </Tooltip>\n</TooltipGroup>`;
+    `${TOOLTIP_IMPORT}<TooltipGroup delayMs={${delayMs}} groupTimeoutMs={${groupTimeoutMs}}>\n  <Tooltip content="Bold (${formatShortcut(modKey, "B")})" durationMs={${durationMs}}>\n    <button>B</button>\n  </Tooltip>\n</TooltipGroup>`;
+
+  const getDefaultCodeSnippet = () =>
+    `${TOOLTIP_IMPORT}<TooltipGroup delayMs={${DEFAULTS.delayMs}} groupTimeoutMs={${DEFAULTS.groupTimeoutMs}}>\n  <Tooltip content="Bold (${formatShortcut(modKey, "B")})" durationMs={${DEFAULTS.durationMs}}>\n    <button>B</button>\n  </Tooltip>\n</TooltipGroup>`;
 
   const knobs: Knob[] = [
     {
@@ -193,9 +199,12 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
   );
 
   const titleBlock = (
-    <div>
-      <h1 className="text-2xl font-semibold text-foreground">Tooltip</h1>
-      {description}
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-foreground">Tooltip</h1>
+        {description}
+      </div>
+      <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
     </div>
   );
 
@@ -258,7 +267,10 @@ export function TooltipPlaygroundBody({ variant }: TooltipPlaygroundBodyProps) {
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {description}
+          <div className="flex items-start justify-between gap-4">
+            {description}
+            <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+          </div>
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>

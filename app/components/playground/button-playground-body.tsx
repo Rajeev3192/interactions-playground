@@ -8,7 +8,10 @@ import { CrossfadeDemo } from "@/components/playground/crossfade-demo";
 import { CollapsibleTray } from "@/components/playground/collapsible-tray";
 import { DemoSection, KnobsColumn } from "@/components/playground/playground-shell";
 import { ConceptGuide } from "@/components/playground/concept-guide";
+import { CopyCodeButton } from "@/components/playground/copy-code-button";
 import { springSnappy } from "@/lib/motion";
+
+const BUTTON_IMPORT = 'import { Button } from "@/components/ui/button";\n\n';
 
 const DEFAULTS = {
   pressMode: "spring" as ButtonPressMode,
@@ -46,9 +49,16 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
   };
 
   const getCodeSnippet = () =>
-    pressMode === "spring"
+    BUTTON_IMPORT +
+    (pressMode === "spring"
       ? `<Button\n  pressMode="spring"\n  pressSpring={{ stiffness: ${stiffness}, damping: ${damping} }}\n  pressScale={${pressScale}}\n/>`
-      : `<Button\n  pressMode="duration"\n  pressDurationMs={${pressDurationMs}}\n  pressScale={${pressScale}}\n/>`;
+      : `<Button\n  pressMode="duration"\n  pressDurationMs={${pressDurationMs}}\n  pressScale={${pressScale}}\n/>`);
+
+  const getDefaultCodeSnippet = () =>
+    BUTTON_IMPORT +
+    (DEFAULTS.pressMode === "spring"
+      ? `<Button\n  pressMode="spring"\n  pressSpring={{ stiffness: ${DEFAULTS.stiffness}, damping: ${DEFAULTS.damping} }}\n  pressScale={${DEFAULTS.pressScale}}\n/>`
+      : `<Button\n  pressMode="duration"\n  pressDurationMs={${DEFAULTS.pressDurationMs}}\n  pressScale={${DEFAULTS.pressScale}}\n/>`);
 
   const knobs: Knob[] = [
     {
@@ -125,9 +135,12 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
   );
 
   const titleBlock = (
-    <div>
-      <h1 className="text-2xl font-semibold text-foreground">Button</h1>
-      {description}
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-foreground">Button</h1>
+        {description}
+      </div>
+      <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
     </div>
   );
 
@@ -183,7 +196,10 @@ export function ButtonPlaygroundBody({ variant }: ButtonPlaygroundBodyProps) {
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {description}
+          <div className="flex items-start justify-between gap-4">
+            {description}
+            <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+          </div>
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>

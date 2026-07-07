@@ -5,6 +5,9 @@ import { Checkbox, type CheckboxCheckedState } from "@/components/ui/checkbox";
 import { KnobsPanel, type Knob } from "@/components/playground/knobs-panel";
 import { DemoSection, KnobsColumn } from "@/components/playground/playground-shell";
 import { ConceptGuide } from "@/components/playground/concept-guide";
+import { CopyCodeButton } from "@/components/playground/copy-code-button";
+
+const CHECKBOX_IMPORT = 'import { Checkbox } from "@/components/ui/checkbox";\n\n';
 
 const DEFAULTS = {
   fillDurationMs: 100,
@@ -29,7 +32,10 @@ export function CheckboxPlaygroundBody({ variant }: CheckboxPlaygroundBodyProps)
   };
 
   const getCodeSnippet = () =>
-    `<Checkbox\n  fillDurationMs={${fillDurationMs}}\n  drawDurationMs={${drawDurationMs}}\n  fillToDrawDelayMs={${fillToDrawDelayMs}}\n/>`;
+    `${CHECKBOX_IMPORT}<Checkbox\n  fillDurationMs={${fillDurationMs}}\n  drawDurationMs={${drawDurationMs}}\n  fillToDrawDelayMs={${fillToDrawDelayMs}}\n/>`;
+
+  const getDefaultCodeSnippet = () =>
+    `${CHECKBOX_IMPORT}<Checkbox\n  fillDurationMs={${DEFAULTS.fillDurationMs}}\n  drawDurationMs={${DEFAULTS.drawDurationMs}}\n  fillToDrawDelayMs={${DEFAULTS.fillToDrawDelayMs}}\n/>`;
 
   const knobs: Knob[] = [
     {
@@ -93,9 +99,12 @@ export function CheckboxPlaygroundBody({ variant }: CheckboxPlaygroundBodyProps)
   );
 
   const titleBlock = (
-    <div>
-      <h1 className="text-2xl font-semibold text-foreground">Checkbox</h1>
-      {description}
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-foreground">Checkbox</h1>
+        {description}
+      </div>
+      <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
     </div>
   );
 
@@ -139,7 +148,10 @@ export function CheckboxPlaygroundBody({ variant }: CheckboxPlaygroundBodyProps)
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {description}
+          <div className="flex items-start justify-between gap-4">
+            {description}
+            <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+          </div>
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>

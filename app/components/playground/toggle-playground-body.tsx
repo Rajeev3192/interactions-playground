@@ -6,7 +6,10 @@ import { KnobsPanel, type Knob } from "@/components/playground/knobs-panel";
 import { SpringPreview } from "@/components/playground/spring-preview";
 import { DemoSection, KnobsColumn } from "@/components/playground/playground-shell";
 import { ConceptGuide } from "@/components/playground/concept-guide";
+import { CopyCodeButton } from "@/components/playground/copy-code-button";
 import { springSnappy } from "@/lib/motion";
+
+const TOGGLE_IMPORT = 'import { Toggle } from "@/components/ui/toggle";\n\n';
 
 const DEFAULTS = {
   stiffness: springSnappy.stiffness as number,
@@ -31,7 +34,10 @@ export function TogglePlaygroundBody({ variant }: TogglePlaygroundBodyProps) {
   };
 
   const getCodeSnippet = () =>
-    `<Toggle\n  spring={{ stiffness: ${stiffness}, damping: ${damping} }}\n  colorDurationMs={${colorDurationMs}}\n/>`;
+    `${TOGGLE_IMPORT}<Toggle\n  spring={{ stiffness: ${stiffness}, damping: ${damping} }}\n  colorDurationMs={${colorDurationMs}}\n/>`;
+
+  const getDefaultCodeSnippet = () =>
+    `${TOGGLE_IMPORT}<Toggle\n  spring={{ stiffness: ${DEFAULTS.stiffness}, damping: ${DEFAULTS.damping} }}\n  colorDurationMs={${DEFAULTS.colorDurationMs}}\n/>`;
 
   const knobs: Knob[] = [
     {
@@ -70,9 +76,12 @@ export function TogglePlaygroundBody({ variant }: TogglePlaygroundBodyProps) {
   );
 
   const titleBlock = (
-    <div>
-      <h1 className="text-2xl font-semibold text-foreground">Toggle</h1>
-      {description}
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-foreground">Toggle</h1>
+        {description}
+      </div>
+      <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
     </div>
   );
 
@@ -117,7 +126,10 @@ export function TogglePlaygroundBody({ variant }: TogglePlaygroundBodyProps) {
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {description}
+          <div className="flex items-start justify-between gap-4">
+            {description}
+            <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+          </div>
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>

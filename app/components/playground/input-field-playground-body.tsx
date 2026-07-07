@@ -5,6 +5,9 @@ import { InputField, type InputFieldStatus } from "@/components/ui/input-field";
 import { KnobsPanel, type Knob } from "@/components/playground/knobs-panel";
 import { DemoSection, KnobsColumn } from "@/components/playground/playground-shell";
 import { ConceptGuide } from "@/components/playground/concept-guide";
+import { CopyCodeButton } from "@/components/playground/copy-code-button";
+
+const INPUT_FIELD_IMPORT = 'import { InputField } from "@/components/ui/input-field";\n\n';
 
 const DEFAULTS = {
   focusDurationMs: 150,
@@ -33,7 +36,10 @@ export function InputFieldPlaygroundBody({ variant }: InputFieldPlaygroundBodyPr
   };
 
   const getCodeSnippet = () =>
-    `<InputField\n  label="Email"\n  focusDurationMs={${focusDurationMs}}\n  shakeAmplitudePx={${shakeAmplitudePx}}\n  shakeDurationMs={${shakeDurationMs}}\n/>`;
+    `${INPUT_FIELD_IMPORT}<InputField\n  label="Email"\n  focusDurationMs={${focusDurationMs}}\n  shakeAmplitudePx={${shakeAmplitudePx}}\n  shakeDurationMs={${shakeDurationMs}}\n/>`;
+
+  const getDefaultCodeSnippet = () =>
+    `${INPUT_FIELD_IMPORT}<InputField\n  label="Email"\n  focusDurationMs={${DEFAULTS.focusDurationMs}}\n  shakeAmplitudePx={${DEFAULTS.shakeAmplitudePx}}\n  shakeDurationMs={${DEFAULTS.shakeDurationMs}}\n/>`;
 
   const triggerError = () => {
     setStatus("error");
@@ -114,9 +120,12 @@ export function InputFieldPlaygroundBody({ variant }: InputFieldPlaygroundBodyPr
   );
 
   const titleBlock = (
-    <div>
-      <h1 className="text-2xl font-semibold text-foreground">Input field</h1>
-      {description}
+    <div className="flex items-start justify-between gap-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-foreground">Input field</h1>
+        {description}
+      </div>
+      <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
     </div>
   );
 
@@ -153,7 +162,10 @@ export function InputFieldPlaygroundBody({ variant }: InputFieldPlaygroundBodyPr
     return (
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex min-w-0 flex-1 flex-col gap-8">
-          {description}
+          <div className="flex items-start justify-between gap-4">
+            {description}
+            <CopyCodeButton label="Default" getCode={getDefaultCodeSnippet} />
+          </div>
           {demoSection}
         </div>
         <KnobsColumn compact>{knobsPanel}</KnobsColumn>
